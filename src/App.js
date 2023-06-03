@@ -1,20 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import { AuthProvider, PrivateRoute } from '. /contexts/Authcontext';
+// import { AuthProvider, PrivateRoute } from '. /contexts/Authcontext';
+import { AuthContextProvider } from './contexts/AuthContext';
+import { BrowserRouter } from 'react-router-dom/dist';
+import Transfer from './pages/Transfer';
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
+      <AuthContextProvider>
+        <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <PrivateRoute path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      </AuthProvider>
-    </Router>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/transfer" element={<Transfer />} />
+        </Routes> 
+        </BrowserRouter>
+      </AuthContextProvider>
   );
 }
 

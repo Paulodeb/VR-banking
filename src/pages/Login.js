@@ -1,22 +1,38 @@
 import React, { useContext, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { AuthContext } from './contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+// import { AuthContext } from './contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
+import Dashboard from './Dashboard';
+import { Navigate } from 'react-router-dom/dist';
 
-function Login() {/* 
+function Login() {
+  const { LoggedIn, password, setPassword, username, setUsername, login } = useAuth();
+  const navigate = useNavigate();
+  /* 
   const { loggedIn, login } = useContext(AuthContext); */
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
 
- /*  const handleLogin = (e) => {
+  //  const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   login(username, password);
+  // };
+
+  // if (loggedIn) {
+  //   return <Navigate to="/dashboard" replace />;
+  // } 
+   const handleLogin = (e) => {
     e.preventDefault();
-    login(username, password);
+    // setCurrentUser({ name: userName });
+    // setEmail({ email: email });
+    // setPassword({ password: password });
+    login();
+    navigate('/dashboard');
   };
 
-  if (loggedIn) {
-    return <Navigate to="/dashboard" replace />;
-  } */
+ 
 
-  return (
+  return !LoggedIn ? (
     <div>
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
@@ -44,7 +60,9 @@ function Login() {/*
         Don't have an account? <Link to="/signup">Sign up</Link>
       </p>
     </div>
-  );
+  ): (
+    <Navigate to="/dashboard" replace />
+  )
 }
 
 export default Login;
